@@ -1,2 +1,4 @@
 # ignore data directory
-data/
+data/yelp_dataset/
+data/twitter_dataset/
+data/covid_19_dataset_2020_06_10

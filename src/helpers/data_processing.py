@@ -2,10 +2,14 @@ import pandas as pd
 import json
 from nltk.tokenize import word_tokenize
 import string
-from config import PROJECT_HOME
+from config.main_config import PROJECT_HOME
 from os import path
 import os
 import csv
+import logging
+import logging.config
+
+logger = logging.getLogger('helper.data_processing')
 
 '''Functions to assist with processing files and bring their content into python.'''
 
@@ -14,7 +18,7 @@ def jsontodf(file_path,n_lines=5000):
     with open(file_path, mode='r', encoding='utf8') as tempfile:
         for i in range(n_lines):
             json_content.append(json.loads(tempfile.readline()))
-
+    logger.info("Data loaded from json to dataframe.")
     return pd.DataFrame(json_content)
 
 

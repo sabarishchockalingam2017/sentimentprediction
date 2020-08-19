@@ -2,6 +2,10 @@ import pandas as pd
 import json
 from nltk.tokenize import word_tokenize
 import string
+from config import PROJECT_HOME
+from os import path
+import os
+import csv
 
 '''Functions to assist with processing files and bring their content into python.'''
 
@@ -61,3 +65,52 @@ def normalize_corpus(original_corpus):
     normalized_corpus = normalized_corpus.apply(lambda x: [w for w in x if (w != '' and w.isalpha())])
 
     return normalized_corpus
+
+def ft_preproc(labelsdf, textser):
+    """ Processes given dataframe to be inputted into fasttext. Creates temporary text file.
+    Parameters:
+        labelsdf (DataFrame): Dataframe containing labels for accompanying textdf.
+        textdf (Series): DataFrame or Series containing text to be classified.
+     Returns:
+        temppath (str): String for path to temporary preprocessed file."""
+
+
+
+    labsep1 = '__label__'
+    formatteddf = pd.DataFrame()
+    formatteddf['labels'] = labelsdf.apply(lambda x: labsep1 + str(x))
+    formatteddf['text'] = textser.apply(lambda x: str(x).replace('\n', '').replace('\t', ''))
+    formatteddf['formatted'] = formatteddf.apply(lambda x: x['labels'] + ' ' + x['text'], axis=1)
+    temppath = path.join(PROJECT_HOME,'data', 'ftformatted.txt')
+
+    with open(temppath, mode='w', encoding='utf8') as file:
+        for item in formatteddf['formatted']:
+            file.write(item)
+            file.write('\n')
+
+    return temppath
+
+def ft_predict(ft_model, ft_input):
+    """ Function to predict multiple sentences/corpus using fasttext model.
+    Parameters:
+        ft_model (FastText Model): trained FastText model that will predict label for input.
+        ft_input (List): list of strings to be labelled.
+    Returns:
+         ft_results (List): label output from fasttext model for inputted text. """
+
+    temppath = path.join(PROJECT_HOME, 'data', 'ft_temp_input.txt')
+    ft_input_df = pd.DataFrame()
+    ft_input_df['text'] = pd.Series(ft_input)
+    ft_input_df['text'].to_csv(temppath,
+                               index=False,
+                               sep=' ',
+                               header=False,
+                               quoting=csv.QUOTE_NONE, quotechar="",
+                               escapechar=" ")
+
+    # with open(tempfilepath, mode='w') as file:
+    #     file.writelines(ft_input)
+
+    ft_results = ft_model.test(temppath, k=1)
+
+    return ft_results

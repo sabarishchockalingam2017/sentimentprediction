@@ -1,5 +1,6 @@
-from config.main_config import PROJECT_HOME
+from config.main_config import PROJECT_HOME, LOGGING_PATH
 from os import path
+from pathlib import Path
 from src.helpers.data_processing import jsontodf, ft_preproc, ft_predict, normalize_corpus
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -12,7 +13,8 @@ import logging.config
 'This script loads and processes data, and then trains and saves the model'
 
 logging.config.fileConfig(path.join(PROJECT_HOME, "config", "logging", "local.conf"),
-                          disable_existing_loggers=False)
+                          disable_existing_loggers=False,
+                          defaults={'log_dir': LOGGING_PATH})
 logger = logging.getLogger('train_model')
 
 # data_folder = 'twitter_dataset'

@@ -1,0 +1,5 @@
+# ignore everything in this directory as they are model files to large to be uploaded to github
+*
+
+# except this gitignore file
+!.gitignore

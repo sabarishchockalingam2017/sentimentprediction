@@ -1,0 +1,4 @@
+# ignore everything in this directory as they are data files too large to be uploaded to github
+*
+# except this gitignore file
+!.gitignore

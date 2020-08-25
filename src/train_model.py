@@ -1,4 +1,4 @@
-from config.main_config import PROJECT_HOME, LOGGING_PATH
+from config.main_config import PROJECT_HOME, LOGGING_PATH, LOGGING_CONFIG
 from os import path
 from pathlib import Path
 from src.helpers.data_processing import jsontodf, ft_preproc, ft_predict, normalize_corpus
@@ -12,7 +12,7 @@ import logging.config
 
 'This script loads and processes data, and then trains and saves the model'
 
-logging.config.fileConfig(path.join(PROJECT_HOME, "config", "logging", "local.conf"),
+logging.config.fileConfig(LOGGING_CONFIG,
                           disable_existing_loggers=False,
                           defaults={'log_dir': LOGGING_PATH})
 logger = logging.getLogger('train_model')
@@ -27,7 +27,6 @@ corpus_path = path.join(data_path, 'yelp_academic_dataset_review.json')
 # loading data
 corpus_df = jsontodf(corpus_path, n_lines=50000)
 corpus_df = corpus_df[['text', 'stars']]
-logger.info("Data loaded.")
 
 # # preprocessing to format for fasttext
 # ft_inputfile = ft_preproc(corpus_df['stars'], corpus_df['text'])

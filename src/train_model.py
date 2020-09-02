@@ -12,9 +12,6 @@ import logging.config
 
 'This script loads and processes data, and then trains and saves the model'
 
-logging.config.fileConfig(LOGGING_CONFIG,
-                          disable_existing_loggers=False,
-                          defaults={'log_dir': LOGGING_PATH})
 logger = logging.getLogger('train_model')
 
 # data_folder = 'twitter_dataset'

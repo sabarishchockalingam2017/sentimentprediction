@@ -1,1 +1,1 @@
-Rating Prediction App
+Sentiment Prediction App

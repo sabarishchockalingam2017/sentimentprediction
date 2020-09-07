@@ -12,9 +12,11 @@ logger = logging.getLogger("run_sentiment_prediction")
 
 
 def run_app():
+    'Boots up app on server.'
     app.run(debug=app.config['DEBUG'], port=app.config['PORT'])
 
 def shutdown_server():
+    'Forces flask app server shutdown.'
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
         raise RuntimeError('Not running with the Werkzeug Server')

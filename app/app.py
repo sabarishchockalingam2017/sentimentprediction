@@ -11,27 +11,23 @@ app.config.from_object('config.flask_config')
 
 logger = logging.getLogger("app")
 
-posts = [
-    {
-        'user': 'Tom',
-        'title': 'my_post1',
-        'content': 'Feeling good'
-    },
-
-    {
-        'user': 'Homer',
-        'title': 'my_post2',
-        'content': 'Feeling bad.'
-    }
-]
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    return render_template('home.html', title='Home')
 
 @app.route("/about")
 def about():
     return render_template('about.html', title='About')
+
+@app.route("/dataset")
+def dataset():
+    return render_template('dataset.html', title='Dataset')
+
+@app.route("/model")
+def model():
+    return render_template('model.html', title='Model')
+
 
 @app.context_processor
 def override_url_for():

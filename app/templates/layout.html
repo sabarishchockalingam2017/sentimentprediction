@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='main.css')}}">
 
     {% if title %}
-        <title>Sentiment Prediction - {{ title }}</title>
+        <title>{{ title }} - Sentiment Prediction</title>
     {% else %}
         <title>Sentiment Prediction</title>
     {% endif %}
@@ -19,47 +19,36 @@
 
 <body>
     <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+      <nav class="navbar navbar-expand-md navbar-dark header-nav fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="/">Flask Blog</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="/">Home</a>
-              <a class="nav-item nav-link" href="/about">About</a>
-            </div>
-            <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="/login">Login</a>
-              <a class="nav-item nav-link" href="/register">Register</a>
+                <a class="nav-item nav-link" href="/">Home</a>
+                <a class="nav-item nav-link" href="/about">About</a>
+                <a class="nav-item nav-link" href="/dataset">Data</a>
+                <a class="nav-item nav-link" href="/model">Model</a>
             </div>
           </div>
+        <!-- add background image -->
         </div>
       </nav>
     </header>
 
     <main role="main" class="container">
-      <div class="row">
+      <div class="row content-col">
         <div class="col-md-8">
           {% block content %}{% endblock %}
         </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
-              <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
-              </ul>
-            </p>
-          </div>
-        </div>
       </div>
     </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <a class="footer-links mr-4" href="https://www.linkedin.com/in/sabarishchockalingam/">LinkedIn</a>
+            <a class="footer-links mr-4" href="https://github.com/sabarishchockalingam2017/sentimentprediction">GitHub</a>
+            <a class="footer-links mr-4">My Demo Portfolio</a>
+        </div>
+    </footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

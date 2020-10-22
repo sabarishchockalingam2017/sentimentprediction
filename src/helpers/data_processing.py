@@ -78,8 +78,6 @@ def ft_preproc(labelsdf, textser):
      Returns:
         temppath (str): String for path to temporary preprocessed file."""
 
-
-
     labsep1 = '__label__'
     formatteddf = pd.DataFrame()
     formatteddf['labels'] = labelsdf.apply(lambda x: labsep1 + str(x))

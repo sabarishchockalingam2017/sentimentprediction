@@ -1,20 +1,40 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash
+from app.forms import InputForm
 import logging
 import logging.config
 from config.main_config import LOGGING_PATH, LOGGING_CONFIG
 import os
+import app.helpers.prediction_handler as predhand
 
 '''This is the flask app and builds the webpage interface for the model.'''
 
 app = Flask(__name__)
 app.config.from_object('config.flask_config')
 
+#make this environmental variable at some point
+#need secret key to verify safe access and prevent security attacks
+app.config['SECRET_KEY'] = "64aaf477f06dfbad2e1169698d10a0dc"
+
 logger = logging.getLogger("app")
 
-@app.route("/")
-@app.route("/home")
+
+
+
+
+@app.route("/", methods=['GET','POST'])
+@app.route("/home", methods=['GET','POST'])
 def home():
-    return render_template('home.html', title='Home')
+    form = InputForm()
+
+    if form.validate_on_submit():
+        logger.debug("Recieved input:{}".format(form.userinput.data))
+        sentpred = predhand.get_prediction(form.userinput.data)
+        flash(f'{sentpred}','success')
+        logger.debug("Predicted {}".format(sentpred))
+
+    return render_template('home.html',
+                           title='Home',
+                           form=form)
 
 @app.route("/about")
 def about():

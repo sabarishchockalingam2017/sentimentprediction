@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+    <section class="home-section">
+        <h1 class="page_title">Sentiment Prediction</h1>
+
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <p>How is your day going?</p>
+                <div class="form-group">
+                    {{ form.userinput(class="form-control form-control-lg") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="prediction-result">
+                        {{ messages }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </form>
+
+        <!--<div>-->
+            <!--<textarea class="model_input"></textarea>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<button class="submit_text">Enter</button>-->
+        <!--</div>-->
+    </section>
+{% endblock content %}

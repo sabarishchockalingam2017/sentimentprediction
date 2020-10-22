@@ -9,3 +9,4 @@ PROJECT_HOME = dirname(dirname(path.abspath(__file__)))
 # needed path module as fileconfig file use unix parsing for writing log file
 LOGGING_PATH = pathlib.PurePosixPath(Path(path.join(PROJECT_HOME, "logs", "run_log.log")))
 LOGGING_CONFIG = Path(PROJECT_HOME, "config", "logging", "local.conf")
+MODEL_PATH = path.join(PROJECT_HOME,'models', 'ft_model.bin')

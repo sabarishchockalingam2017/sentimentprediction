@@ -11,14 +11,10 @@ import app.helpers.prediction_handler as predhand
 app = Flask(__name__)
 app.config.from_object('config.flask_config')
 
-#make this environmental variable at some point
 #need secret key to verify safe access and prevent security attacks
-app.config['SECRET_KEY'] = "64aaf477f06dfbad2e1169698d10a0dc"
+app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY')
 
 logger = logging.getLogger("app")
-
-
-
 
 
 @app.route("/", methods=['GET','POST'])

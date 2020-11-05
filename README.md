@@ -6,10 +6,9 @@
   * [1. Set up environment](#1-set-up-environment)
     + [With `virtualenv` and `pip`](#with-virtualenv-and-pip)
     + [With `conda`](#with-conda)
-  * [2. Configure Flask app](#2-configure-flask-app)
-  * [3. Initialize the database](#3-initialize-the-database)
-  * [4. Download and upload data ](#4-download-and-upload-data)
-  * [5. Run the application](#5-run-the-application)
+  * [2. Download and upload data ](#2-download-and-upload-data)
+  * [3. Train model ](#3-train-model)
+  * [4. Run the application](#4-run-the-application)
 
 ## Project Description
 This sentiment prediction app was created to predict the general emotional tone of a given text.
@@ -39,44 +38,65 @@ This sentiment prediction app was created to predict the general emotional tone 
 │   ├── flask_config.py               <- Settings for flask app
 │   ├── main_config.py                <- Settings for other items such as model storage directory and data directory
 │
-├── data                              <- Folder that contains data used or generated. Only the external/ and sample/ subdirectories are tracked by git. 
-│   ├── archive/                      <- Place to put archive data is no longer usabled. Not synced with git. 
-│   ├── external/                     <- External data sources, will be synced with git
-│   ├── sample/                       <- Sample data used for code development and testing, will be synced with git
+├── data                              <- Folder that contains data used or generated. Place yelp_dataset folder here.
 │
-├── docs                              <- A default Sphinx project; see sphinx-doc.org for details.
+├── logs                              <- Directory holds logs created by logger files.
 │
-├── figures                           <- Generated graphics and figures to be used in reporting.
-│
-├── models                            <- Trained model objects (TMOs), model predictions, and/or model summaries
-│   ├── archive                       <- No longer current models. This directory is included in the .gitignore and is not tracked by git
-│
-├── notebooks
-│   ├── develop                       <- Current notebooks being used in development.
-│   ├── deliver                       <- Notebooks shared with others. 
-│   ├── archive                       <- Develop notebooks no longer being used.
-│   ├── template.ipynb                <- Template notebook for analysis with useful imports and helper functions. 
+├── models                            <- Directory to save trained models and load afterwards
 │
 ├── src                               <- Source data for the project 
 │   ├── archive/                      <- No longer current scripts.
 │   ├── helpers/                      <- Helper scripts used in main src files 
-│   ├── sql/                          <- SQL source code
-│   ├── add_songs.py                  <- Script for creating a (temporary) MySQL database and adding songs to it 
-│   ├── ingest_data.py                <- Script for ingesting data from different sources 
-│   ├── generate_features.py          <- Script for cleaning and transforming data and generating features used for use in training and scoring.
-│   ├── train_model.py                <- Script for training machine learning model(s)
-│   ├── score_model.py                <- Script for scoring new predictions using a trained model.
-│   ├── postprocess.py                <- Script for postprocessing predictions and model results
-│   ├── evaluate_model.py             <- Script for evaluating model performance 
+│   ├── train_model.py                <- Run script to train and save fasttext model.
 │
-├── test                              <- Files necessary for running model tests (see documentation below) 
-
-├── run.py                            <- Simplifies the execution of one or more of the src scripts 
-├── app.py                            <- Flask wrapper for running the model 
-├── config.py                         <- Configuration file for Flask app
+├── run.py                            <- Run to start up flask app
 ├── requirements.txt                  <- Python package dependencies 
 ```
 This project structure was partially influenced by the [Cookiecutter Data Science project](https://drivendata.github.io/cookiecutter-data-science/).
 
 ## Running the application
+### 1. Setup Environment
+Make sure to have virtualenv or conda installed.
 
+Add a FLASK_KEY environmental variable with a password.
+```bash
+echo $FLASK_KEY='your_password'
+```
+
+#### With `virtualenv`
+```bash
+pip install virtualenv
+
+virtualenv sentimentprediction
+
+source sentimentprediction/bin/activate
+
+pip install -r requirements.txt
+
+```
+#### With `conda`
+
+```bash
+conda create -n sentimentprediction python=3.7
+conda activate sentimentprediction
+pip install -r requirements.txt
+
+```
+
+### 2. Download and upload data
+
+Download the yelp data set from: https://www.yelp.com/dataset/download.
+
+Place the dataset in a folder called 'yelp_dataset' in the data folder.
+
+### 3. Train model
+Run the following command from the projects home directory.
+```bash
+python src/train_model.py
+```
+
+### 4. Run the application
+Run the following command from the projects home directory.
+```bash
+python run.py
+```
